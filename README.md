@@ -1,1 +1,1 @@
-# one-armed-bandit
+# One armed bandit
