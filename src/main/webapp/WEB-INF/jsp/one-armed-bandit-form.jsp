@@ -35,12 +35,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-animate.min.js"></script>
     <script src="resources/js/functions.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOBqf1LYN9p_LH-sTWAjg2jXCX_RWfsUI&callback=initMap"
-            async defer></script>
-
 
 <body ng-app="myApp" ng-controller="myController" class="bg-light text-dark" style="">
 
