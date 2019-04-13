@@ -1,3 +1,4 @@
+/*
 package net.coffeecoding;
 
 import com.google.gson.Gson;
@@ -7,8 +8,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-public class Test {
+public class Test1 {
     public static void main(String[] args) {
 
         Gson gson = new Gson();
@@ -25,12 +27,19 @@ public class Test {
             System.out.println(winnings);
 
             // Convert JSON to JsonElement, and later to String
-            /*JsonElement json = gson.fromJson(reader, JsonElement.class);
+            */
+/*JsonElement json = gson.fromJson(reader, JsonElement.class);
             String jsonInString = gson.toJson(json);
-            System.out.println(jsonInString);*/
+            System.out.println(jsonInString);*//*
+
+
+
+            Random random = new Random(500);
+
+            System.out.println(random.nextInt());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-}
+}*/
