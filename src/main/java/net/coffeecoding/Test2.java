@@ -1,7 +1,5 @@
 package net.coffeecoding;
 
-import net.coffeecoding.model.Game;
-
 import java.util.Random;
 
 

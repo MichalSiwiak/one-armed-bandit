@@ -19,6 +19,7 @@ public class GameController {
     @RequestMapping(value = "/startGame", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<?> startGame()  {
         Game game = new Game();
+        System.out.println(game.toString());
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
 

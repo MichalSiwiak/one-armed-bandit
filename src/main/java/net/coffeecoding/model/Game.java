@@ -1,12 +1,12 @@
 package net.coffeecoding.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.google.gson.Gson;
 import net.coffeecoding.config.GameConfig;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -19,44 +19,82 @@ public class Game {
     private String message;
     private List<List<Byte>> symbols;
     private double win;
+    private List<List<Byte>> reels;
+    private GameConfig gameConfig;
 
     public Game() {
 
-        this.status = "OK";
-        this.gameId = 13;
-        this.rno = getRandomNumberInRange(0, 500);
-        this.message = "OK";
+        status = "OK";
+        gameId = 13;
+        rno = getRandomNumberInRange(0, 500);
+        message = "OK";
 
         Gson gson = new Gson();
+
         try (Reader reader = new FileReader("C:\\Users\\msiwiak\\IdeaProjects\\projects\\one-armed-bandit\\src\\main\\resources\\config.json")) {
-            GameConfig gameConfig = gson.fromJson(reader, GameConfig.class);
 
-            List<Byte> reel0 = gameConfig.getReels().get(0);
-            List<Byte> reel1 = gameConfig.getReels().get(1);
-            List<Byte> reel2 = gameConfig.getReels().get(2);
-
-            System.out.println(reel0.toString());
-            System.out.println(reel1.toString());
-            System.out.println(reel2.toString());
+            gameConfig = gson.fromJson(reader, GameConfig.class);
+            reels = gameConfig.getReels();
 
             for (int i = 0; i < rno; i++) {
-                Collections.rotate(reel0, gameConfig.getSpin().get(0));
-                Collections.rotate(reel1, gameConfig.getSpin().get(1));
-                Collections.rotate(reel2, gameConfig.getSpin().get(2));
+                spin();
             }
-
-            System.out.println("======   rno=" + rno + "   ======");
-
-            System.out.println(reel0.toString());
-            System.out.println(reel1.toString());
-            System.out.println(reel2.toString());
-
 
         } catch (IOException e) { // obsłużyć IllegalArgumentException
             e.printStackTrace();
             this.status = "ERROR";
             this.message = "Invalid Config file.";
         }
+    }
+
+    public boolean checkWin() {
+
+        if ((symbols.get(0).get(1).equals(symbols.get(1).get(1))) && (symbols.get(0).get(1).equals(symbols.get(2).get(1)))) {
+            win = gameConfig.getWinnings().get(symbols.get(0).get(1));
+            return true;
+        } else {
+            this.win = 0;
+            return false;
+        }
+    }
+
+    public void spin() {
+
+        Collections.rotate(reels.get(0), gameConfig.getSpin().get(0));
+        Collections.rotate(reels.get(1), gameConfig.getSpin().get(1));
+        Collections.rotate(reels.get(2), gameConfig.getSpin().get(2));
+
+        List<Byte> symbols1 = new ArrayList<>();
+        symbols1.add(reels.get(0).get(0));
+        symbols1.add(reels.get(0).get(1));
+        symbols1.add(reels.get(0).get(2));
+
+        List<Byte> symbols2 = new ArrayList<>();
+        symbols2.add(reels.get(1).get(0));
+        symbols2.add(reels.get(1).get(1));
+        symbols2.add(reels.get(1).get(2));
+
+        List<Byte> symbols3 = new ArrayList<>();
+        symbols3.add(reels.get(2).get(0));
+        symbols3.add(reels.get(2).get(1));
+        symbols3.add(reels.get(2).get(2));
+
+        symbols = new ArrayList<>();
+        symbols.add(symbols1);
+        symbols.add(symbols2);
+        symbols.add(symbols3);
+
+        checkWin();
+    }
+
+    private static int getRandomNumberInRange(int min, int max) {
+
+        if (min >= max) {
+            throw new IllegalArgumentException("Max must be greater than min.");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 
     public String getStatus() {
@@ -114,17 +152,10 @@ public class Game {
                 ", gameId=" + gameId +
                 ", rno=" + rno +
                 ", message='" + message + '\'' +
+                ", symbols=" + symbols +
+                ", win=" + win +
+                ", reels=" + reels +
+                ", gameConfig=" + gameConfig +
                 '}';
-    }
-
-
-    private static int getRandomNumberInRange(int min, int max) {
-
-        if (min >= max) {
-            throw new IllegalArgumentException("Max must be greater than min.");
-        }
-
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
     }
 }
