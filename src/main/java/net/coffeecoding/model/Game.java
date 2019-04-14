@@ -43,7 +43,7 @@ public class Game {
         } catch (IOException e) { // obsłużyć IllegalArgumentException
             e.printStackTrace();
             this.status = "ERROR";
-            this.message = "Invalid Config file.";
+            this.message = "Invalid Config file!";
         }
     }
 
