@@ -110,6 +110,52 @@
             </div>
         </div>
 
+        <div class="py-5 mt-3" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"><button class="btn w-100 btn-success" type="button">Start Game</button></div>
+                    <div class="col-md-3"><button class="btn w-100 btn-danger" type="button">End Game</button></div>
+                    <div class="col-md-3"><button class="btn w-100 btn-warning" type="button">Spin</button></div>
+                    <div class="col-md-3"><button class="btn w-100 btn-secondary" type="button">Table</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group text-center"><label>BET</label><input type="number" class="form-control rounded-0 text-center text-dark"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group text-center"><label>WIN</label><input type="number" class="form-control rounded-0 text-center text-dark"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group text-center"><label>SUM OF WINS</label><input type="number" class="form-control rounded-0 text-center text-dark"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-3 mb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{resources/img/1}}" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/2.png" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/3.png" width="200"></div>
+                </div>
+                <div class="row bg-warning border border-dark">
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/4.png" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/5.png" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/6.png" width="200"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/7.png" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/8.png" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/9.png" width="200"></div>
+
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

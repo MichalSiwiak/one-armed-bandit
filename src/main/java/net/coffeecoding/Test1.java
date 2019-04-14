@@ -1,4 +1,3 @@
-/*
 package net.coffeecoding;
 
 import com.google.gson.Gson;
@@ -26,11 +25,10 @@ public class Test1 {
             Collections.rotate(winnings, 1);
             System.out.println(winnings);
 
-            // Convert JSON to JsonElement, and later to String
-            */
-/*JsonElement json = gson.fromJson(reader, JsonElement.class);
+/*            // Convert JSON to JsonElement, and later to String
+JsonElement json = gson.fromJson(reader, JsonElement.class);
             String jsonInString = gson.toJson(json);
-            System.out.println(jsonInString);*//*
+            System.out.println(jsonInString);*/
 
 
 
@@ -42,4 +40,4 @@ public class Test1 {
             e.printStackTrace();
         }
     }
-}*/
+}
