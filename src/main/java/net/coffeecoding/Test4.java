@@ -21,7 +21,6 @@ public class Test4 {
             game.spin();
             count++;
 
-
         }
 
         System.out.println(count);

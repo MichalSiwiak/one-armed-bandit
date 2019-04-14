@@ -14,7 +14,7 @@ import java.util.Random;
 public class Game {
 
     private String status;
-    private int gameId;
+    private String gameId;
     private int rno;
     private String message;
     private List<List<Byte>> symbols;
@@ -24,11 +24,7 @@ public class Game {
 
     public Game() {
 
-        status = "OK";
-        gameId = 13;
         rno = getRandomNumberInRange(0, 500);
-        message = "OK";
-
         Gson gson = new Gson();
 
         try (Reader reader = new FileReader("C:\\Users\\msiwiak\\IdeaProjects\\projects\\one-armed-bandit\\src\\main\\resources\\config.json")) {
@@ -42,8 +38,8 @@ public class Game {
 
         } catch (IOException e) { // obsłużyć IllegalArgumentException
             e.printStackTrace();
-            this.status = "ERROR";
-            this.message = "Invalid Config file!";
+            status = "ERROR";
+            message = "Invalid Config file!";
         }
     }
 
@@ -53,7 +49,7 @@ public class Game {
             win = gameConfig.getWinnings().get(symbols.get(0).get(1));
             return true;
         } else {
-            this.win = 0;
+            win = 0;
             return false;
         }
     }
@@ -105,11 +101,11 @@ public class Game {
         this.status = status;
     }
 
-    public int getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 
