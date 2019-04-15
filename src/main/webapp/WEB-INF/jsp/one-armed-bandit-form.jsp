@@ -35,6 +35,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="resources/js/functions.js"></script>
 
 <body ng-app="myApp" ng-controller="myController" class="bg-light text-dark" style="">
@@ -113,11 +114,21 @@
         <div class="py-5 mt-3" >
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3"><button class="btn w-100 btn-success" type="button">Start Game</button></div>
-                    <div class="col-md-3"><button class="btn w-100 btn-danger" type="button">End Game</button></div>
+                    <div class="col-md-3"><button ng-click="startGame()" class="btn w-100 btn-success" type="button">Start Game</button></div>
+                    <div class="col-md-3"><button ng-click="cokolwiek()" class="btn w-100 btn-danger" type="button">End Game</button></div>
                     <div class="col-md-3"><button class="btn w-100 btn-warning" type="button">Spin</button></div>
                     <div class="col-md-3"><button class="btn w-100 btn-secondary" type="button">Table</button></div>
                 </div>
+            </div>
+        </div>
+        <div class="py-5 mt-3" >
+            <div class="container">
+               <%-- resources/img/1.png--%>
+                {{'resources/img/'+game.symbols[0][0]+'.png'}}
+                <br>
+                {{'resources/img/'+game.symbols[0][1]+'.png'}}
+                <br>
+                {{'resources/img/'+game.symbols[0][2]+'.png'}}
             </div>
         </div>
         <div class="py-3">
@@ -138,20 +149,19 @@
         <div class="py-3 mb-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{resources/img/1}}" width="200"></div>
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/2.png" width="200"></div>
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/3.png" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[0][0]+'.png'}}" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[1][0]+'.png'}}" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[2][0]+'.png'}}" width="200"></div>
                 </div>
                 <div class="row bg-warning border border-dark">
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/4.png" width="200"></div>
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/5.png" width="200"></div>
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/6.png" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[0][1]+'.png'}}" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[1][1]+'.png'}}" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[2][1]+'.png'}}" width="200"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/7.png" width="200"></div>
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/8.png" width="200"></div>
-                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="resources/img/9.png" width="200"></div>
-
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[0][2]+'.png'}}" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[1][2]+'.png'}}" width="200"></div>
+                    <div class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto" src="{{'resources/img/'+game.symbols[2][2]+'.png'}}" width="200"></div>
                 </div>
             </div>
         </div>
