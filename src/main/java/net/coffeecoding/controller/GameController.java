@@ -90,15 +90,19 @@ public class GameController {
         System.out.println(spinRequestBody.getGameId());
         System.out.println(spinRequestBody.getRno());
         Game game = gameMap.get(spinRequestBody.getGameId());
+        System.out.println(game.toString());
+        System.out.println(game!=null);
 
-        if (game != null) {
+        if (game!=null) {
 
             game.spin();
             game.setRno(game.getRno() + 1);
             game.setMessage("Spin Created.");
 
-            GameListRow gameListRow = getGameListRowById(spinRequestBody.getGameId());
-            gameListRow.setLastSpin(new Date());
+            //GameListRow gameListRow = getGameListRowById(spinRequestBody.getGameId());
+            //gameListRow.setLastSpin(new Date());
+
+            System.out.println("OK");
 
             return new ResponseEntity<>(game, HttpStatus.OK);
         } else {
@@ -107,6 +111,7 @@ public class GameController {
             messageResponseBody.setGameId(spinRequestBody.getGameId());
             messageResponseBody.setStatus("ERROR");
             messageResponseBody.setMessage("Game was deleted or session has expired.");
+            System.out.println("NOT_FOUND");
 
             return new ResponseEntity<>(messageResponseBody, HttpStatus.NOT_FOUND);
         }

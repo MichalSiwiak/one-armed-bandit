@@ -6,6 +6,11 @@ app.controller("myController", function ($scope, $http) {
     $scope.load = true;
     $scope.start = false;
 
+    $scope.form = {
+        gameId: "",
+        rno: 1
+    };
+
     $scope.startGame = function () {
         $http({
             method: 'GET',
@@ -14,13 +19,30 @@ app.controller("myController", function ($scope, $http) {
             $scope.game = response.data;
             $scope.load = false;
             $scope.start = true;
+            $scope.form.gameId = response.data.gameId;
         }, function errorCallback(response) {
             console.log(response.statusText);
         });
     };
 
-    $scope.cokolwiek = function () {
-        console.log('dupa');
+    $scope.spin = function () {
+        $http({
+            method: 'POST',
+            url: 'spin',
+            data: angular.toJson($scope.form),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function successCallback(response) {
+            $scope.game = response.data;
+            console.log($scope.game);
+        }, function errorCallback(response) {
+            console.log(response.statusText);
+        });
     };
+
+    function error(response) {
+        console.log(response.statusText);
+    }
 
 });

@@ -138,7 +138,7 @@
                         </div>
                     </div>
                     <div class="col-md-6" style="">
-                        <button class="btn w-100 btn-warning mt-1" type="button">SPIN</button>
+                        <button ng-click="spin()" class="btn w-100 btn-warning mt-1" type="button">SPIN</button>
                     </div>
                 </div>
             </div>
