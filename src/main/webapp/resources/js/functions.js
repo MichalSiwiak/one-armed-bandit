@@ -3,6 +3,8 @@ var app = angular.module("myApp", []);
 app.controller("myController", function ($scope, $http) {
 
     $scope.game = '';
+    $scope.load = true;
+    $scope.start = false;
 
     $scope.startGame = function () {
         $http({
@@ -10,8 +12,8 @@ app.controller("myController", function ($scope, $http) {
             url: 'startGame'
         }).then(function successCallback(response) {
             $scope.game = response.data;
-            console.log(response.data);
-            console.log("cokolwiek");
+            $scope.load = false;
+            $scope.start = true;
         }, function errorCallback(response) {
             console.log(response.statusText);
         });

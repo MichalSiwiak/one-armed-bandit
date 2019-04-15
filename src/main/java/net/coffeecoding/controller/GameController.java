@@ -57,6 +57,7 @@ public class GameController {
                 game = new Game();
                 game.setGameId(session.getId());
                 game.setStatus("OK");
+                game.setMessage("Game Created.");
                 gameMap.put(session.getId(), game);
 
                 model.addAttribute("reels", game.getSymbols());
@@ -72,7 +73,7 @@ public class GameController {
                 gameListRow.setCreated(new Date());
                 gameListRowList.add(gameListRow);
 
-                return new ResponseEntity<>(messageResponseBody, HttpStatus.CREATED);
+                return new ResponseEntity<>(game, HttpStatus.CREATED);
             }
 
         } else {
