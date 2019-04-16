@@ -1,0 +1,7 @@
+net.coffeecoding.TDDtests
+net.coffeecoding.config
+net.coffeecoding.controller
+net.coffeecoding.dao
+net.coffeecoding.entity
+net.coffeecoding.model
+net.coffeecoding.service
