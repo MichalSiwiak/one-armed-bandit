@@ -107,9 +107,41 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="text-left">One armed bandit</h1>
+                        <h1>Jednoręki bandyta - web serwis wykorzystujący SPRING MVC</h1>
                         <hr>
-                        <h5>This application is a solution for...</h5>
+                        <h5 style="text-justify: auto">Użytkownik podczas jednej sesji może utworzyć tylko jedna grę. Pojedyncza sesja jest
+                            otwarciem przeglądarki - jeśli klient zamknie przeglądarkę aplikacja tworzy nową grę,
+                            natomiast stara gra jest nadal zapamiętania. Starą grę można zamknąć przechodząc do zakładki
+                            Results, gdzie znajdziemy listę wszystkich gier zakończonych i aktywnych. Rezultaty gry są
+                            zapisywane do bazy danych MySQL z użyciem Hibernate oraz Spring Data. </h5>
+                        <br>
+                        <h5 style="text-justify: auto">Metoda spin zwraca typ boolean i informuje użytkownika czy padła wygrana. Jeśli klient
+                            wygrał kwotę dodaje się ona do całkowitej wygranej. Użytkownik podczas jednego żądania
+                            wykonuje tylko jeden spin, ale metoda można ich wykonać wiele - o wygranej decyduje ostatni
+                            spin. Gdy gracz rozpoczyna grę aplikacja losuje liczbę spinów z przedziału od 0 do 500. Na
+                            początku gdy użytkownik rozpoczyna grę nie ma wygranej - wygrana może paść tylko i wyłącznie
+                            podczas wykonania przynajmniej jednego spinu. </h5>
+                        <br>
+                        <h5 style="text-justify: auto">Aplikacja przechowuje obiekty games w mapie której kluczem jest id sesji. Plik config został
+                            zmodyfikowany gdyż tylko 5 symboli daje wygrana - banany i truskawki nie dają wygranej po
+                            mimo wpadnięcia na jednej środkowej linii. Aplikacja posiada łącznie 8 symboli gier z czego
+                            5 daje wygrana - tak jak było w treści zadania. Aktualne ustawienia gry można podejrzeć
+                            tutaj <b><a href="resources/config.json" target="_blank">config.json</a> </b>. Gdy gra zostaje zakończona
+                            wówczas jest usuwania z listy aktywnych gier i otrzymuje
+                            status closed. Gier o statusie closed nie można ponownie uruchomić.</h5>
+                        <br>
+                        <h5>Użyte technologie</h5>
+                        <h5>
+                            <ul>
+                                <li>Spring Rest</li>
+                                <li>AngularJS</li>
+                                <li>Tomcat 8.5</li>
+                                <li>Serwer Ubuntu 16.04 LTS</li>
+                                <li>MySQL</li>
+                                <li>Java 8</li>
+                            </ul>
+                        </h5>
+
 
                     </div>
                 </div>

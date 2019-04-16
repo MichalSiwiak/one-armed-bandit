@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-md-4">
                         <a href="${pageContext.request.contextPath}/sessions"
-                           class="btn w-100 btn-secondary">Table</a>
+                           class="btn w-100 btn-secondary">Results</a>
                     </div>
                 </div>
             </div>

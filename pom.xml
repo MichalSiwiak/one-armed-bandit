@@ -126,6 +126,16 @@
 
     </dependencies>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>LATEST</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <!-- Add support for Maven WAR Plugin -->
     <build>
         <finalName>one-armed-bandit</finalName>
