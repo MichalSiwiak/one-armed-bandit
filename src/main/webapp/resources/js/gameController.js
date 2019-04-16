@@ -1,6 +1,6 @@
-var app = angular.module("myApp", []);
+var app = angular.module("game", []);
 
-app.controller("myController", function ($scope, $http) {
+app.controller("gameController", function ($scope, $http) {
 
     $scope.game = '';
     $scope.load = true;

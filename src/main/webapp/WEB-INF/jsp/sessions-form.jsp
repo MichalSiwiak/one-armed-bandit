@@ -36,9 +36,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="resources/js/functions2.js"></script>
+    <script src="resources/js/sessionManagementController.js"></script>
 
-<body ng-app="SessionManagement" ng-controller="SessionManagementController" class="bg-light text-dark" style="">
+<body ng-app="sessionManagement" ng-controller="sessionManagementController" class="bg-light text-dark" style="">
 
 <div id="wrap">
     <div id="main" class="clear-top">
@@ -105,12 +105,11 @@
                 <div class="row">
                     <div class="col-md-0 text-left">
                         <h1 class="text-left text-primary">One armed bandit</h1>
-                        <p class="lead text-left">This application is a solution for...</p>
+                        <p class="lead text-left">The game is a one-armed bandit simulation - a web service that uses Spring MVC technology</p>
                     </div>
                 </div>
             </div>
         </div>
-
 
 
         <div class="py-3">
@@ -120,28 +119,31 @@
                 <table class="table table-striped">
                     <thead class="thead-light">
                     <tr class="text-center">
-                        <th>Game ID</th>
+                        <th>Game Number</th>
+                        <th>Game ID (Session)</th>
                         <th>Created</th>
                         <th>Last Spin</th>
                         <th>Status</th>
+                        <th>Sum of win</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
                     <tr ng-repeat="game in activeGames">
+                        <td>{{ game.numberOfGame }}</td>
                         <td>{{ game.gameId }}</td>
-                        <td>{{ game.created }}</td>
-                        <td>{{ game.lastSpin }}</td>
+                        <td>{{game.created | date:'medium'}}</td>
+                        <td>{{game.lastSpin | date:'medium'}}</td>
                         <td>{{ game.status }}</td>
+                        <td>{{ game.win }}</td>
                         <td class="text-center">
-                            <a title="Delete" class="btn btn-sm text-dark btn-warning"
+                            <button ng-disabled="game.status == 'Closed'" title="Delete" class="btn btn-sm text-dark btn-warning"
                                ng-click="deleteGame( game )"><i class="fa fa-trash fa-lg text-dark"
-                                                                 aria-hidden="true"></i></a>
+                                                                aria-hidden="true"></i></button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-
 
 
             </div>

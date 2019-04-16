@@ -36,9 +36,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="resources/js/functions.js"></script>
+    <script src="resources/js/gameController.js"></script>
 
-<body ng-app="myApp" ng-controller="myController" class="bg-light text-dark" style="">
+<body ng-app="game" ng-controller="gameController" class="bg-light text-dark" style="">
 
 <div id="wrap">
     <div id="main" class="clear-top">
@@ -105,7 +105,7 @@
                 <div class="row">
                     <div class="col-md-0 text-left">
                         <h1 class="text-left text-primary">One armed bandit</h1>
-                        <p class="lead text-left">This application is a solution for...</p>
+                        <p class="lead text-left">The game is a one-armed bandit simulation - a web service that uses Spring MVC technology</p>
                     </div>
                 </div>
             </div>
@@ -121,7 +121,8 @@
                         <button ng-click="endGame()" class="btn w-100 btn-danger" type="button">End Game</button>
                     </div>
                     <div class="col-md-4">
-                        <button class="btn w-100 btn-secondary" type="button">Table</button>
+                        <a href="${pageContext.request.contextPath}/sessions" target="_blank"
+                           class="btn w-100 btn-secondary">Table</a>
                     </div>
                 </div>
             </div>
@@ -174,19 +175,22 @@
                 <h1>${game}</h1>
                 <div class="row">
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[0][0]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="resources/img/0.png" width="200">
-                    </div>
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[1][0]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[0][0]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/0.png" width="200">
                     </div>
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[2][0]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[1][0]+'.png'}}"
+                                                                    width="200">
+                    </div>
+                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
+                                                                   src="resources/img/0.png" width="200">
+                    </div>
+                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
+                                                                    src="{{'resources/img/'+game.symbols[2][0]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/0.png" width="200">
@@ -194,19 +198,22 @@
                 </div>
                 <div class="row bg-warning border border-dark">
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[0][1]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[0][1]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/1.png" width="200">
                     </div>
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[1][1]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[1][1]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/1.png" width="200">
                     </div>
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[2][1]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[2][1]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/1.png" width="200">
@@ -214,19 +221,22 @@
                 </div>
                 <div class="row">
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[0][2]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[0][2]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/2.png" width="200">
                     </div>
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[1][2]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[1][2]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/2.png" width="200">
                     </div>
                     <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[2][2]+'.png'}}" width="200">
+                                                                    src="{{'resources/img/'+game.symbols[2][2]+'.png'}}"
+                                                                    width="200">
                     </div>
                     <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
                                                                    src="resources/img/2.png" width="200">

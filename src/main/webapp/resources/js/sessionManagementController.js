@@ -1,6 +1,6 @@
-var app = angular.module("SessionManagement", []);
+var app = angular.module("sessionManagement", []);
 
-app.controller("SessionManagementController", function ($scope, $http) {
+app.controller("sessionManagementController", function ($scope, $http) {
 
     $scope.activeGames = [];
 

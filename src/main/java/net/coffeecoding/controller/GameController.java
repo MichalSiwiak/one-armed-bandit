@@ -45,12 +45,15 @@ public class GameController {
 
         if (activeGames.get(session.getId()) == null) {
 
-            if (activeGames.size() > 5) {//zrobić w pliku konfiguracyjnym
+            if (activeGames.size() >= 5) {//zrobić w pliku konfiguracyjnym
 
                 Game game = new Game();
                 game.setGameId(session.getId());
                 game.setStatus("ERROR");
-                game.setMessage("The number of games has been exceeded");
+                game.setRno(0);
+                game.setWin(0);
+                game.setSymbols(game.getInitSymbols());
+                game.setMessage("The number of games has been exceeded - please close abandoned games");
 
                 return new ResponseEntity<>(game, HttpStatus.OK);
 
@@ -58,6 +61,7 @@ public class GameController {
                 Game game = new Game();
                 game.setGameId(session.getId());
                 game.setStatus("OK");
+                game.setWin(0);
                 game.setMessage("Game Created");
                 activeGames.put(session.getId(), game);
 
@@ -65,6 +69,7 @@ public class GameController {
                 sessionGame.setGameId(game.getGameId());
                 sessionGame.setCreated(new Date());
                 sessionGame.setStatus("Active");
+                sessionGame.setNumberOfGame(sessionGames.size()+1);
                 sessionGames.add(sessionGame);
 
                 return new ResponseEntity<>(game, HttpStatus.OK);
@@ -88,6 +93,7 @@ public class GameController {
             game.setMessage("Spin Created");
             SessionGame sessionGame = getActiveSessionGameById(spin.getGameId());
             sessionGame.setLastSpin(new Date());
+            sessionGame.setWin(game.getWin());
 
             return new ResponseEntity<>(game, HttpStatus.OK);
         } else {
@@ -107,10 +113,8 @@ public class GameController {
     public ResponseEntity<Game> endGame(@RequestBody String gameId) {
 
         Game game = activeGames.get(gameId);
-        System.out.println("cokolwiek");
 
         if (game != null) {
-
             activeGames.remove(gameId);
             SessionGame sessionGame = getActiveSessionGameById(gameId);
             sessionGame.setStatus("Closed"); //can null
@@ -120,12 +124,11 @@ public class GameController {
             return new ResponseEntity<>(game, HttpStatus.OK);
 
         } else {
-
             Game notFoundGame = new Game();
             notFoundGame.setGameId(gameId);
             notFoundGame.setStatus("ERROR");
-            game.setRno(0);
-            game.setWin(0);
+            notFoundGame.setRno(0);
+            notFoundGame.setWin(0);
             notFoundGame.setSymbols(notFoundGame.getInitSymbols());
             notFoundGame.setMessage("Game was closed or session has expired");
 
@@ -145,9 +148,9 @@ public class GameController {
     @RequestMapping(value = "/activeGames/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteSales(@PathVariable("id") String id) {
         SessionGame sessionGame = getActiveSessionGameById(id);
-        System.out.println("cokolwiek");
         if (sessionGame != null) {
             sessionGame.setStatus("Closed");
+            activeGames.remove(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
