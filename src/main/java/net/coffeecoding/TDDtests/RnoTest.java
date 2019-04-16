@@ -1,11 +1,8 @@
-package net.coffeecoding.tests;
+package net.coffeecoding.TDDtests;
 
 import net.coffeecoding.model.Game;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Test6 {
+public class RnoTest {
     public static void main(String[] args) {
 
         Game game = new Game();

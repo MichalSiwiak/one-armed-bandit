@@ -2,10 +2,9 @@ package net.coffeecoding.model;
 
 import com.google.gson.Gson;
 import net.coffeecoding.config.GameConfig;
+import org.springframework.util.ResourceUtils;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,40 +24,44 @@ public class Game {
     public Game() {
 
         rno = getRandomNumberInRange(0, 500);
-        Gson gson = new Gson();
 
-        try (Reader reader = new FileReader("C:\\Users\\msiwiak\\IdeaProjects\\projects\\one-armed-bandit\\src\\main\\resources\\config.json")) {
+        Gson gson = new Gson();
+        File file = null;
+
+        try {
+            file = ResourceUtils.getFile("classpath:config.json");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            status = "ERROR";
+            message = "Could not found config file!";
+        }
+
+        try (Reader reader = new FileReader(file)) {
 
             gameConfig = gson.fromJson(reader, GameConfig.class);
             reels = gameConfig.getReels();
 
-            for (int i = 0; i < rno; i++) {
-                spin();
+            int temp = rno;
+            for (int i = 0; i < temp; i++) {
+                spin((byte) 1);
             }
 
-        } catch (IOException e) { // obsłużyć IllegalArgumentException
+            win = 0;
+
+        } catch (IOException e) { // support for  IllegalArgumentException !
             e.printStackTrace();
             status = "ERROR";
             message = "Invalid Config file!";
         }
     }
 
-    public boolean checkWin() {
+    public boolean spin(byte numberOfSpins) {
 
-        if ((symbols.get(0).get(1).equals(symbols.get(1).get(1))) && (symbols.get(0).get(1).equals(symbols.get(2).get(1)))) {
-            double win = gameConfig.getWinnings().get(symbols.get(0).get(1));
-            this.win = this.win + win;
-            return true;
-        } else {
-            return false;
+        for (int i = 0; i < numberOfSpins; i++) {
+            Collections.rotate(reels.get(0), gameConfig.getSpin().get(0));
+            Collections.rotate(reels.get(1), gameConfig.getSpin().get(1));
+            Collections.rotate(reels.get(2), gameConfig.getSpin().get(2));
         }
-    }
-
-    public void spin() {
-
-        Collections.rotate(reels.get(0), gameConfig.getSpin().get(0));
-        Collections.rotate(reels.get(1), gameConfig.getSpin().get(1));
-        Collections.rotate(reels.get(2), gameConfig.getSpin().get(2));
 
         List<Byte> symbols1 = new ArrayList<>();
         symbols1.add(reels.get(0).get(0));
@@ -80,27 +83,36 @@ public class Game {
         symbols.add(symbols2);
         symbols.add(symbols3);
 
-        checkWin();
+        rno = rno + numberOfSpins;
+
+        if ((symbols.get(0).get(1).equals(symbols.get(1).get(1))) && (symbols.get(0).get(1).equals(symbols.get(2).get(1)))) {
+            win = win + gameConfig.getWinnings().get(symbols.get(0).get(1));
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
-    public List<List<Byte>> getInitSymbols(){
+    public List<List<Byte>> getInitSymbols() {
 
         List<List<Byte>> symbols = new ArrayList<>();
 
         List<Byte> symbols1 = new ArrayList<>();
-        symbols1.add((byte)0);
-        symbols1.add((byte)1);
-        symbols1.add((byte)2);
+        symbols1.add((byte) 0);
+        symbols1.add((byte) 1);
+        symbols1.add((byte) 2);
 
         List<Byte> symbols2 = new ArrayList<>();
-        symbols2.add((byte)0);
-        symbols2.add((byte)1);
-        symbols2.add((byte)2);
+        symbols2.add((byte) 0);
+        symbols2.add((byte) 1);
+        symbols2.add((byte) 2);
 
         List<Byte> symbols3 = new ArrayList<>();
-        symbols3.add((byte)0);
-        symbols3.add((byte)1);
-        symbols3.add((byte)2);
+        symbols3.add((byte) 0);
+        symbols3.add((byte) 1);
+        symbols3.add((byte) 2);
 
         symbols = new ArrayList<>();
         symbols.add(symbols1);

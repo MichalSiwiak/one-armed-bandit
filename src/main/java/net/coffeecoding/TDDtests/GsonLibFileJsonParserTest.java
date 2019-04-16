@@ -1,19 +1,21 @@
-package net.coffeecoding.tests;
+package net.coffeecoding.TDDtests;
 
 import com.google.gson.Gson;
 import net.coffeecoding.config.GameConfig;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import org.springframework.util.ResourceUtils;
+
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Test1 {
-    public static void main(String[] args) {
+public class GsonLibFileJsonParserTest {
+    public static void main(String[] args) throws FileNotFoundException {
+
+        File file = ResourceUtils.getFile("classpath:config.json");
 
         Gson gson = new Gson();
-        try (Reader reader = new FileReader("C:\\Users\\msiwiak\\IdeaProjects\\projects\\one-armed-bandit\\src\\main\\resources\\config.json")) {
+        try (Reader reader = new FileReader(file)) {
 
             // Convert JSON to Java Object
             GameConfig gameConfig = gson.fromJson(reader, GameConfig.class);

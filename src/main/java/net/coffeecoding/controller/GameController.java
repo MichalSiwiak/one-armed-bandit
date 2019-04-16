@@ -65,7 +65,6 @@ public class GameController {
                 Game game = new Game();
                 game.setGameId(session.getId());
                 game.setStatus("OK");
-                game.setWin(0);
                 game.setMessage("Game created");
                 activeGames.put(session.getId(), game);
 
@@ -94,7 +93,7 @@ public class GameController {
         Game game = activeGames.get(spin.getGameId());
 
         if (game != null) {
-            game.spin();
+            game.spin((byte) spin.getRno());
             game.setRno(game.getRno() + 1);
             game.setMessage("Spin created");
             SessionGame sessionGame = getActiveSessionGameById(spin.getGameId());

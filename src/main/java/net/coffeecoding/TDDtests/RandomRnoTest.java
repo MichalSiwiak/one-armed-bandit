@@ -1,9 +1,9 @@
-package net.coffeecoding.tests;
+package net.coffeecoding.TDDtests;
 
 import java.util.Random;
 
 
-public class Test2 {
+public class RandomRnoTest {
     public static void main(String[] args) {
 
         for (int i = 0; i < 1000; i++) {
