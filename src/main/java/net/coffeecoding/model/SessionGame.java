@@ -2,11 +2,12 @@ package net.coffeecoding.model;
 
 import java.util.Date;
 
-public class GameListRow {
+public class SessionGame {
 
     private String gameId;
     private Date created;
     private Date lastSpin;
+    private String status;
 
     public String getGameId() {
         return gameId;
@@ -32,12 +33,21 @@ public class GameListRow {
         this.lastSpin = lastSpin;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "GameListRow{" +
+        return "SessionGame{" +
                 "gameId='" + gameId + '\'' +
                 ", created=" + created +
                 ", lastSpin=" + lastSpin +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

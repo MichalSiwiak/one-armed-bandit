@@ -1,6 +1,6 @@
 package net.coffeecoding.model;
 
-public class SpinRequestBody {
+public class Spin {
 
     private String gameId;
     private int rno;
@@ -23,7 +23,7 @@ public class SpinRequestBody {
 
     @Override
     public String toString() {
-        return "SpinRequestBody{" +
+        return "Spin{" +
                 "gameId='" + gameId + '\'' +
                 ", rno=" + rno +
                 '}';

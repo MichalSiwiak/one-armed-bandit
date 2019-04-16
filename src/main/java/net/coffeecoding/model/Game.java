@@ -46,10 +46,10 @@ public class Game {
     public boolean checkWin() {
 
         if ((symbols.get(0).get(1).equals(symbols.get(1).get(1))) && (symbols.get(0).get(1).equals(symbols.get(2).get(1)))) {
-            win = gameConfig.getWinnings().get(symbols.get(0).get(1));
+            double win = gameConfig.getWinnings().get(symbols.get(0).get(1));
+            this.win = this.win + win;
             return true;
         } else {
-            win = 0;
             return false;
         }
     }
@@ -81,6 +81,33 @@ public class Game {
         symbols.add(symbols3);
 
         checkWin();
+    }
+
+    public List<List<Byte>> getInitSymbols(){
+
+        List<List<Byte>> symbols = new ArrayList<>();
+
+        List<Byte> symbols1 = new ArrayList<>();
+        symbols1.add((byte)0);
+        symbols1.add((byte)1);
+        symbols1.add((byte)2);
+
+        List<Byte> symbols2 = new ArrayList<>();
+        symbols2.add((byte)0);
+        symbols2.add((byte)1);
+        symbols2.add((byte)2);
+
+        List<Byte> symbols3 = new ArrayList<>();
+        symbols3.add((byte)0);
+        symbols3.add((byte)1);
+        symbols3.add((byte)2);
+
+        symbols = new ArrayList<>();
+        symbols.add(symbols1);
+        symbols.add(symbols2);
+        symbols.add(symbols3);
+
+        return symbols;
     }
 
     private static int getRandomNumberInRange(int min, int max) {

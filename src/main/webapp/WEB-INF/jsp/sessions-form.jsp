@@ -36,9 +36,9 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="resources/js/functions.js"></script>
+    <script src="resources/js/functions2.js"></script>
 
-<body ng-app="myApp" ng-controller="myController" class="bg-light text-dark" style="">
+<body ng-app="SessionManagement" ng-controller="SessionManagementController" class="bg-light text-dark" style="">
 
 <div id="wrap">
     <div id="main" class="clear-top">
@@ -111,127 +111,39 @@
             </div>
         </div>
 
-        <div class="py-5 mt-2">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <button ng-click="startGame()" class="btn w-100 btn-success" type="button">Start Game</button>
-                    </div>
-                    <div class="col-md-4">
-                        <button ng-click="endGame()" class="btn w-100 btn-danger" type="button">End Game</button>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn w-100 btn-secondary" type="button">Table</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12 mb-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2" style="">
-                        <h4 class="text-center mt-2 mb-0">BET</h4>
-                    </div>
-                    <div class="col-md-4" style="">
-                        <div class="form-group m-0 mt-1 mb-0"><input type="number" class="form-control text-center">
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="">
-                        <button ng-click="spin()" class="btn w-100 btn-warning mt-1" type="button">SPIN</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
         <div class="py-3">
             <div class="container">
+                <h2>List of Games</h2>
+
                 <table class="table table-striped">
-                    <thead>
+                    <thead class="thead-light">
                     <tr class="text-center">
-                        <th scope="col">Game ID</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">RNO</th>
-                        <th scope="col">Message</th>
-                        <th scope="col">Sum of wins</th>
+                        <th>Game ID</th>
+                        <th>Created</th>
+                        <th>Last Spin</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
-                    <tr>
-                        <th scope="row">{{game.gameId}}</th>
-                        <td>{{game.status}}</td>
-                        <td>{{game.rno}}</td>
-                        <td>{{game.message}}</td>
-                        <td>{{game.win}}</td>
+                    <tr ng-repeat="game in activeGames">
+                        <td>{{ game.gameId }}</td>
+                        <td>{{ game.created }}</td>
+                        <td>{{ game.lastSpin }}</td>
+                        <td>{{ game.status }}</td>
+                        <td class="text-center">
+                            <a title="Delete" class="btn btn-sm text-dark btn-warning"
+                               ng-click="deleteGame( game )"><i class="fa fa-trash fa-lg text-dark"
+                                                                 aria-hidden="true"></i></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="py-3 mb-5">
-            <div class="container">
-                <h1>${game}</h1>
-                <div class="row">
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[0][0]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="resources/img/0.png" width="200">
-                    </div>
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[1][0]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/0.png" width="200">
-                    </div>
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[2][0]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/0.png" width="200">
-                    </div>
-                </div>
-                <div class="row bg-warning border border-dark">
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[0][1]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/1.png" width="200">
-                    </div>
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[1][1]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/1.png" width="200">
-                    </div>
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[2][1]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/1.png" width="200">
-                    </div>
-                </div>
-                <div class="row">
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[0][2]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/2.png" width="200">
-                    </div>
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[1][2]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/2.png" width="200">
-                    </div>
-                    <div ng-if="start" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                      src="{{'resources/img/'+game.symbols[2][2]+'.png'}}" width="200">
-                    </div>
-                    <div ng-if="load" class="col-md-4 border"><img class="img-fluid d-block rounded mx-auto"
-                                                                   src="resources/img/2.png" width="200">
-                    </div>
-                </div>
+
+
+
             </div>
         </div>
 

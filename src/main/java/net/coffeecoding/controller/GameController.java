@@ -1,9 +1,8 @@
 package net.coffeecoding.controller;
 
 import net.coffeecoding.model.Game;
-import net.coffeecoding.model.GameListRow;
-import net.coffeecoding.model.MessageResponseBody;
-import net.coffeecoding.model.SpinRequestBody;
+import net.coffeecoding.model.SessionGame;
+import net.coffeecoding.model.Spin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +18,13 @@ import java.util.*;
 @Controller
 public class GameController {
 
-    private Map<String, Game> gameMap;
-    private List<GameListRow> gameListRowList;
+    private Map<String, Game> activeGames;
+    private List<SessionGame> sessionGames;
 
     @PostConstruct
     private void init() {
-        gameMap = new HashMap<>();
-        gameListRowList = new ArrayList<>();
+        activeGames = new HashMap<>();
+        sessionGames = new ArrayList<>();
     }
 
     @GetMapping("/demo")
@@ -33,132 +32,135 @@ public class GameController {
         return "one-armed-bandit-form";
     }
 
+    @GetMapping("/sessions")
+    public String showActiveGames(Model model) {
+        return "sessions-form";
+    }
+
 
     @RequestMapping(value = "/startGame", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<?> startGame(HttpServletRequest httpServletRequest, Model model) {
+    public ResponseEntity<Game> startGame(HttpServletRequest httpServletRequest) {
 
         HttpSession session = httpServletRequest.getSession();
 
-        Game game;
+        if (activeGames.get(session.getId()) == null) {
 
-        if (gameMap.get(session.getId()) == null) {
+            if (activeGames.size() > 5) {//zrobić w pliku konfiguracyjnym
 
-            if (gameMap.size() > 5) {
-                //zrobić w pliku konfiguracyjnym
+                Game game = new Game();
+                game.setGameId(session.getId());
+                game.setStatus("ERROR");
+                game.setMessage("The number of games has been exceeded");
 
-                MessageResponseBody messageResponseBody = new MessageResponseBody();
-                messageResponseBody.setGameId(session.getId());
-                messageResponseBody.setStatus("ERROR");
-                messageResponseBody.setMessage("The number of games has been exceeded.");
-
-                return new ResponseEntity<>(messageResponseBody, HttpStatus.IM_USED);
+                return new ResponseEntity<>(game, HttpStatus.OK);
 
             } else {
-                game = new Game();
+                Game game = new Game();
                 game.setGameId(session.getId());
                 game.setStatus("OK");
-                game.setMessage("Game Created.");
-                gameMap.put(session.getId(), game);
+                game.setMessage("Game Created");
+                activeGames.put(session.getId(), game);
 
-                model.addAttribute("reels", game.getSymbols());
+                SessionGame sessionGame = new SessionGame();
+                sessionGame.setGameId(game.getGameId());
+                sessionGame.setCreated(new Date());
+                sessionGame.setStatus("Active");
+                sessionGames.add(sessionGame);
 
-                MessageResponseBody messageResponseBody = new MessageResponseBody();
-                messageResponseBody.setGameId(session.getId());
-                messageResponseBody.setStatus("OK");
-                messageResponseBody.setMessage("Game Created.");
-                messageResponseBody.setRno(game.getRno());
-
-                GameListRow gameListRow = new GameListRow();
-                gameListRow.setGameId(game.getGameId());
-                gameListRow.setCreated(new Date());
-                gameListRowList.add(gameListRow);
-
-                return new ResponseEntity<>(game, HttpStatus.CREATED);
+                return new ResponseEntity<>(game, HttpStatus.OK);
             }
 
         } else {
-            game = gameMap.get(session.getId());
-            game.setMessage("Game Already Exist.");
+            Game game = activeGames.get(session.getId());
+            game.setMessage("Game Already Exist");
             return new ResponseEntity<>(game, HttpStatus.OK);
         }
-
     }
 
     @RequestMapping(value = "/spin", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<?> spin(@RequestBody SpinRequestBody spinRequestBody) {
+    public ResponseEntity<?> spin(@RequestBody Spin spin) {
 
-        System.out.println(spinRequestBody.getGameId());
-        System.out.println(spinRequestBody.getRno());
-        Game game = gameMap.get(spinRequestBody.getGameId());
-        System.out.println(game.toString());
-        System.out.println(game!=null);
+        Game game = activeGames.get(spin.getGameId());
 
-        if (game!=null) {
-
+        if (game != null) {
             game.spin();
             game.setRno(game.getRno() + 1);
-            game.setMessage("Spin Created.");
-
-            //GameListRow gameListRow = getGameListRowById(spinRequestBody.getGameId());
-            //gameListRow.setLastSpin(new Date());
-
-            System.out.println("OK");
+            game.setMessage("Spin Created");
+            SessionGame sessionGame = getActiveSessionGameById(spin.getGameId());
+            sessionGame.setLastSpin(new Date());
 
             return new ResponseEntity<>(game, HttpStatus.OK);
         } else {
+            Game notFoundGame = new Game();
+            notFoundGame.setGameId(spin.getGameId());
+            notFoundGame.setStatus("ERROR");
+            notFoundGame.setRno(0);
+            notFoundGame.setWin(0);
+            notFoundGame.setSymbols(notFoundGame.getInitSymbols());
+            notFoundGame.setMessage("Game was closed or session has expired");
 
-            MessageResponseBody messageResponseBody = new MessageResponseBody();
-            messageResponseBody.setGameId(spinRequestBody.getGameId());
-            messageResponseBody.setStatus("ERROR");
-            messageResponseBody.setMessage("Game was deleted or session has expired.");
-            System.out.println("NOT_FOUND");
-
-            return new ResponseEntity<>(messageResponseBody, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(notFoundGame, HttpStatus.OK);
         }
     }
 
+    @RequestMapping(value = "/endGame", consumes = MediaType.TEXT_PLAIN_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Game> endGame(@RequestBody String gameId) {
 
-    @RequestMapping(value = "/endGame", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<MessageResponseBody> endGame(@RequestBody String gameId) {
-
-        Game game = gameMap.get(gameId);
+        Game game = activeGames.get(gameId);
+        System.out.println("cokolwiek");
 
         if (game != null) {
 
-            MessageResponseBody messageResponseBody = new MessageResponseBody();
-            gameMap.remove(gameId);
+            activeGames.remove(gameId);
+            SessionGame sessionGame = getActiveSessionGameById(gameId);
+            sessionGame.setStatus("Closed"); //can null
+            game.setSymbols(game.getInitSymbols());
+            game.setMessage("Game was closed");
 
-            messageResponseBody.setGameId(gameId);
-            messageResponseBody.setStatus("OK");
-            messageResponseBody.setRno(game.getRno());
-            messageResponseBody.setMessage("Game was closed.");
-
-            return new ResponseEntity<>(messageResponseBody, HttpStatus.OK);
+            return new ResponseEntity<>(game, HttpStatus.OK);
 
         } else {
 
-            MessageResponseBody messageResponseBody = new MessageResponseBody();
-            messageResponseBody.setGameId(gameId);
-            messageResponseBody.setStatus("ERROR");
-            messageResponseBody.setMessage("Game was deleted or session has expired.");
+            Game notFoundGame = new Game();
+            notFoundGame.setGameId(gameId);
+            notFoundGame.setStatus("ERROR");
+            game.setRno(0);
+            game.setWin(0);
+            notFoundGame.setSymbols(notFoundGame.getInitSymbols());
+            notFoundGame.setMessage("Game was closed or session has expired");
 
-            return new ResponseEntity<>(messageResponseBody, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(notFoundGame, HttpStatus.OK);
         }
 
     }
 
-    @RequestMapping(value = "/sessions", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "/activeGames", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<?> sessions() {
-        return new ResponseEntity<>(gameListRowList, HttpStatus.OK);
+        return new ResponseEntity<>(sessionGames, HttpStatus.OK);
     }
 
-    private GameListRow getGameListRowById(String id) {
-        for (GameListRow gameListRow : gameListRowList) {
-            if (gameListRow.getGameId() == id) {
-                return gameListRow;
+    /**
+     * HTTP DELETE - Delete sales
+     */
+    @RequestMapping(value = "/activeGames/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteSales(@PathVariable("id") String id) {
+        SessionGame sessionGame = getActiveSessionGameById(id);
+        System.out.println("cokolwiek");
+        if (sessionGame != null) {
+            sessionGame.setStatus("Closed");
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    private SessionGame getActiveSessionGameById(String id) {
+        for (SessionGame sessionGame : sessionGames) {
+            if (sessionGame.getGameId().equals(id) && sessionGame.getStatus().equals("Active")) {
+                return sessionGame;
             }
         }
-        return null;
+        return null; // new GameListROw ?? zamiast null
     }
 
     @GetMapping("/error")

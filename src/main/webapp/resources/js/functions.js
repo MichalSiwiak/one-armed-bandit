@@ -35,14 +35,24 @@ app.controller("myController", function ($scope, $http) {
             }
         }).then(function successCallback(response) {
             $scope.game = response.data;
-            console.log($scope.game);
         }, function errorCallback(response) {
             console.log(response.statusText);
         });
     };
 
-    function error(response) {
-        console.log(response.statusText);
-    }
+    $scope.endGame = function () {
+        $http({
+            method: 'POST',
+            url: 'endGame',
+            data: $scope.game.gameId,
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        }).then(function successCallback(response) {
+            $scope.game = response.data;
+        }, function errorCallback(response) {
+            console.log(response.statusText);
+        });
+    };
 
 });

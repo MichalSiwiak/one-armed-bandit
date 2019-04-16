@@ -1,4 +1,4 @@
-package net.coffeecoding;
+package net.coffeecoding.tests;
 
 import java.util.HashMap;
 import java.util.Map;

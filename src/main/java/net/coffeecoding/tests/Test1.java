@@ -1,4 +1,4 @@
-package net.coffeecoding;
+package net.coffeecoding.tests;
 
 import com.google.gson.Gson;
 import net.coffeecoding.config.GameConfig;
