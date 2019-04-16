@@ -49,7 +49,7 @@ public class GameController {
 
         if (activeGames.get(session.getId()) == null) {
 
-            if (activeGames.size() >= 5) {//number of limit of games should be in config file
+            if (activeGames.size() >= 20) {//number of limit of games should be in config file
 
                 Game game = new Game();
                 game.setGameId(session.getId());
@@ -94,7 +94,6 @@ public class GameController {
 
         if (game != null) {
             game.spin((byte) spin.getRno());
-            game.setRno(game.getRno() + 1);
             game.setMessage("Spin created");
             SessionGame sessionGame = getActiveSessionGameById(spin.getGameId());
             sessionGame.setLastSpin(new Date());
