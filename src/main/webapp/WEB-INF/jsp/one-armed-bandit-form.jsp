@@ -121,7 +121,7 @@
                         <button ng-click="endGame()" class="btn w-100 btn-danger" type="button">End Game</button>
                     </div>
                     <div class="col-md-4">
-                        <a href="${pageContext.request.contextPath}/sessions" target="_blank"
+                        <a href="${pageContext.request.contextPath}/sessions"
                            class="btn w-100 btn-secondary">Table</a>
                     </div>
                 </div>

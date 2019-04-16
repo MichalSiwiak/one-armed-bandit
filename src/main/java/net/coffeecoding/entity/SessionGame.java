@@ -1,16 +1,35 @@
-package net.coffeecoding.model;
+package net.coffeecoding.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Entity
+@Table(name = "sessionGame")
 public class SessionGame {
 
-
+    @Id
+    @GeneratedValue
     private int numberOfGame;
     private String gameId;
     private Date created;
     private Date lastSpin;
     private String status;
     private double win;
+
+    @Override
+    public String toString() {
+        return "SessionGame{" +
+                "numberOfGame=" + numberOfGame +
+                ", gameId='" + gameId + '\'' +
+                ", created=" + created +
+                ", lastSpin=" + lastSpin +
+                ", status='" + status + '\'' +
+                ", win=" + win +
+                '}';
+    }
 
     public int getNumberOfGame() {
         return numberOfGame;
@@ -58,17 +77,5 @@ public class SessionGame {
 
     public void setWin(double win) {
         this.win = win;
-    }
-
-    @Override
-    public String toString() {
-        return "SessionGame{" +
-                "numberOfGame=" + numberOfGame +
-                ", gameId='" + gameId + '\'' +
-                ", created=" + created +
-                ", lastSpin=" + lastSpin +
-                ", status='" + status + '\'' +
-                ", win=" + win +
-                '}';
     }
 }

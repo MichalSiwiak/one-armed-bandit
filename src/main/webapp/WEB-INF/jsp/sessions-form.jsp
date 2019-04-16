@@ -115,6 +115,8 @@
         <div class="py-3">
             <div class="container">
                 <h2>List of Games</h2>
+                <a class="btn text-light mb-4 btn-primary" href="${pageContext.request.contextPath}/demo">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
 
                 <table class="table table-striped">
                     <thead class="thead-light">
